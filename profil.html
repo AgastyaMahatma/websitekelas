@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Profile - Kelas B Angkatan 3</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@100..900&display=swap" rel="stylesheet">
+  <!-- FontAwesome Free CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            luxury: {
+              dark: '#060913',
+              navy: '#0a0f1d',
+              gold: '#DFBA73',
+              goldDark: '#C5A059',
+            }
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'serif'],
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background: radial-gradient(circle at center, #0a0f1d 0%, #060913 100%);
+      color: #E5E7EB;
+    }
+    .gold-glow {
+      box-shadow: 0 0 20px rgba(223, 186, 115, 0.08);
+      border: 1px solid rgba(223, 186, 115, 0.15);
+    }
+    .double-border {
+      position: relative;
+      border: 1px solid rgba(223, 186, 115, 0.3);
+      padding: 16px;
+    }
+    .double-border::before {
+      content: '';
+      position: absolute;
+      top: 6px; left: 6px; right: 6px; bottom: 6px;
+      border: 1px solid rgba(223, 186, 115, 0.12);
+      pointer-events: none;
+    }
+    /* Rotating Crest behind the frame */
+    .crest-bg {
+      animation: rotateCrest 25s linear infinite;
+    }
+    @keyframes rotateCrest {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #060913;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #C5A059;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #DFBA73;
+    }
+  </style>
+</head>
+<body class="font-sans antialiased overflow-x-hidden min-h-screen relative flex flex-col justify-between selection:bg-luxury-gold selection:text-luxury-dark">
+
+  <!-- Sticky Navbar -->
+  <nav class="sticky top-0 z-50 w-full border-b border-[#DFBA73]/10 bg-luxury-dark/70 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex h-20 items-center justify-between">
+        <div class="flex items-center gap-3">
+          <img src="Logo.png" alt="Class Logo" class="h-12 w-12 object-contain" onerror="this.src='https://placehold.co/100x100/0a0f1d/DFBA73?text=Logo'">
+          <div>
+            <span class="font-serif text-lg tracking-widest text-luxury-gold block leading-none">KELAS B</span>
+            <span class="text-xs uppercase tracking-widest text-[#9CA3AF]">Angkatan III</span>
+          </div>
+        </div>
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="index.html" class="font-sans text-sm uppercase tracking-widest text-[#9CA3AF] hover:text-luxury-gold transition-colors duration-300">Home</a>
+          <a href="akademik.html" class="font-sans text-sm uppercase tracking-widest text-[#9CA3AF] hover:text-luxury-gold transition-colors duration-300">Akademik & Piket</a>
+        </div>
+        <div class="md:hidden">
+          <button id="mobile-menu-btn" class="text-luxury-gold hover:text-white focus:outline-none transition-colors duration-300">
+            <i class="fa-solid fa-bars text-2xl"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden border-b border-[#DFBA73]/10 bg-luxury-dark/95 backdrop-blur-lg px-4 pt-2 pb-6 space-y-4">
+      <a href="index.html" class="block font-sans text-sm uppercase tracking-widest text-[#9CA3AF] hover:text-luxury-gold pl-3 py-2 transition-colors duration-300">Home</a>
+      <a href="akademik.html" class="block font-sans text-sm uppercase tracking-widest text-[#9CA3AF] hover:text-luxury-gold pl-3 py-2 transition-colors duration-300">Akademik & Piket</a>
+    </div>
+  </nav>
+
+  <!-- Profile Loader -->
+  <div id="profile-loader" class="flex-grow flex flex-col items-center justify-center py-40 space-y-4 z-10">
+    <div class="relative w-16 h-16 flex items-center justify-center">
+      <div class="absolute inset-0 rounded-full border-2 border-luxury-gold/20"></div>
+      <div class="absolute inset-0 rounded-full border-t-2 border-luxury-gold animate-spin"></div>
+      <i class="fa-solid fa-crown text-luxury-gold text-lg animate-pulse"></i>
+    </div>
+    <p class="text-xs uppercase tracking-widest text-[#9CA3AF]">Revealing profile...</p>
+  </div>
+
+  <!-- Editorial Profile Panel -->
+  <main id="profile-content" class="hidden flex-grow relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-12 lg:py-20 flex flex-col justify-between">
+    
+    <!-- Top Back Arrow link -->
+    <div class="mb-10">
+      <a href="index.html#directory" class="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-[#9CA3AF] hover:text-luxury-gold transition-colors duration-300">
+        <i class="fa-solid fa-arrow-left-long"></i> Back to Directory
+      </a>
+    </div>
+
+    <!-- Editorial Core Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
+      
+      <!-- Left Panel: Visual Showcase -->
+      <div class="lg:col-span-5 flex justify-center relative py-10 w-full">
+        <!-- Floating slowly rotating geometric gold crest behind frame -->
+        <div class="crest-bg absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] h-[340px] sm:w-[440px] sm:h-[440px] border border-dashed border-luxury-gold/10 rounded-full pointer-events-none z-0">
+          <div class="absolute inset-[15%] border border-double border-luxury-gold/5 rounded-full"></div>
+          <div class="absolute inset-0 flex items-center justify-center">
+            <!-- Geometric cross-lines in background -->
+            <div class="w-full h-px bg-luxury-gold/5 absolute"></div>
+            <div class="h-full w-px bg-luxury-gold/5 absolute"></div>
+          </div>
+        </div>
+
+        <!-- Student Portrait Frame -->
+        <div class="relative z-10 double-border w-[280px] sm:w-[320px] lg:w-[350px] aspect-[3/4] bg-luxury-dark/60 backdrop-blur-sm rounded-sm overflow-hidden shadow-2xl transition-all duration-700 hover:border-luxury-gold/40">
+          <div id="portrait-container" class="w-full h-full relative overflow-hidden">
+            <!-- Injected image / fallback -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Panel: Narrative & Stats -->
+      <div id="narrative-panel" class="lg:col-span-7 space-y-8 text-center lg:text-left opacity-0 translate-x-10">
+        <!-- Badges block -->
+        <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3">
+          <!-- Absen Badge -->
+          <div id="badge-absen" class="px-4 py-1.5 bg-luxury-gold/10 border border-luxury-gold/30 rounded-full text-xs uppercase tracking-widest text-luxury-gold font-semibold shadow-[0_0_15px_rgba(223,186,115,0.08)]">
+            Absen --
+          </div>
+          <!-- Title / Gelar Badge -->
+          <div id="badge-title" class="px-4 py-1.5 bg-white/5 border border-white/10 rounded-full text-xs uppercase tracking-widest text-[#E5E7EB] font-medium">
+            Noble Student
+          </div>
+        </div>
+
+        <!-- Student Name -->
+        <h1 id="student-name" class="font-serif text-4xl sm:text-5xl lg:text-6xl text-white font-medium tracking-wide leading-tight">
+          Student Name
+        </h1>
+
+        <!-- Date of birth & Zodiac Widget -->
+        <div class="inline-flex items-center gap-6 py-3 px-5 bg-luxury-navy/40 backdrop-blur-md rounded-sm border border-[#DFBA73]/10 max-w-full">
+          <!-- Birth Date -->
+          <div class="flex items-center gap-2">
+            <i class="fa-regular fa-calendar-check text-luxury-gold"></i>
+            <span id="student-dob" class="text-xs sm:text-sm text-gray-300 font-light tracking-wide">--</span>
+          </div>
+          <div class="h-4 w-px bg-luxury-gold/20"></div>
+          <!-- Zodiac -->
+          <div class="flex items-center gap-2">
+            <i id="zodiac-icon" class="fa-solid fa-star text-luxury-gold"></i>
+            <span id="zodiac-name" class="text-xs sm:text-sm text-luxury-gold font-medium uppercase tracking-widest">--</span>
+          </div>
+        </div>
+
+        <!-- Personal Hobbies/Keahlian Tags -->
+        <div class="space-y-2">
+          <p class="text-[10px] uppercase tracking-[0.2em] text-[#9CA3AF]">Expertise & Hobbies</p>
+          <div id="hobby-tags" class="flex flex-wrap items-center justify-center lg:justify-start gap-2">
+            <!-- Injected microtags -->
+          </div>
+        </div>
+
+        <!-- Quotes Section -->
+        <div class="relative py-6 max-w-2xl mx-auto lg:mx-0">
+          <i class="fa-solid fa-quote-left text-3xl sm:text-4xl text-luxury-gold/15 absolute top-0 left-0 lg:-left-4"></i>
+          <blockquote id="student-quote" class="font-serif text-lg sm:text-xl lg:text-2xl text-gray-200 italic leading-relaxed pl-6 pr-6 relative z-10 font-light">
+            "Quotes go here..."
+          </blockquote>
+          <i class="fa-solid fa-quote-right text-3xl sm:text-4xl text-luxury-gold/15 absolute bottom-0 right-0 lg:-right-4"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Controls (Sequential) -->
+    <div class="flex items-center justify-between border-t border-[#DFBA73]/10 pt-8 mt-12">
+      <!-- Prev Button -->
+      <button id="prev-btn" class="inline-flex items-center gap-3 px-6 py-3 border border-luxury-gold/20 hover:border-luxury-gold hover:bg-luxury-gold/5 text-luxury-gold hover:text-white transition-all duration-300 rounded-sm group">
+        <i class="fa-solid fa-chevron-left text-xs group-hover:-translate-x-1 transition-transform"></i>
+        <span class="font-sans text-xs uppercase tracking-widest font-light">Prev Profile</span>
+      </button>
+
+      <!-- Sequential Index Indicator -->
+      <div id="nav-indicator" class="font-serif text-base sm:text-lg text-luxury-gold">
+        <span id="current-index" class="font-bold">--</span> / 24
+      </div>
+
+      <!-- Next Button -->
+      <button id="next-btn" class="inline-flex items-center gap-3 px-6 py-3 border border-luxury-gold/20 hover:border-luxury-gold hover:bg-luxury-gold/5 text-luxury-gold hover:text-white transition-all duration-300 rounded-sm group">
+        <span class="font-sans text-xs uppercase tracking-widest font-light">Next Profile</span>
+        <i class="fa-solid fa-chevron-right text-xs group-hover:translate-x-1 transition-transform"></i>
+      </button>
+    </div>
+
+  </main>
+
+  <!-- Premium Error Modal -->
+  <div id="error-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-luxury-dark/90 backdrop-blur-md">
+    <div class="bg-luxury-navy/90 border border-red-500/30 max-w-md w-full p-8 rounded-sm text-center space-y-6 shadow-2xl relative">
+      <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 bg-red-500/10 border border-red-500/30 rounded-full flex items-center justify-center text-red-500 text-3xl">
+        <i class="fa-solid fa-triangle-exclamation animate-pulse"></i>
+      </div>
+      <div class="pt-6 space-y-2">
+        <h3 class="font-serif text-2xl text-white">Profile Not Found</h3>
+        <p class="text-sm text-gray-400">The profile id you requested could not be retrieved from the database, or the endpoint has failed.</p>
+      </div>
+      <a href="index.html" class="block w-full py-3 bg-luxury-gold/10 hover:bg-luxury-gold/20 border border-luxury-gold/40 text-luxury-gold font-sans text-xs uppercase tracking-widest rounded-sm text-center transition-all duration-300">
+        Back to Homepage
+      </a>
+    </div>
+  </div>
+
+  <!-- Footer Section -->
+  <footer class="border-t border-[#DFBA73]/10 bg-luxury-dark py-12 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <img src="Logo.png" alt="Class Logo" class="h-10 w-10 object-contain" onerror="this.src='https://placehold.co/100x100/0a0f1d/DFBA73?text=Logo'">
+        <p class="text-xs uppercase tracking-widest text-gray-500">© 2026 KELAS B / ANGKATAN III. All Rights Reserved.</p>
+      </div>
+      <div class="flex gap-6 text-gray-500 text-sm">
+        <a href="index.html" class="hover:text-luxury-gold transition-colors duration-300">Home</a>
+        <a href="akademik.html" class="hover:text-luxury-gold transition-colors duration-300">Schedule</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- GSAP Animations & Dynamic Rendering Script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script>
+    // ----------------------------------------------------
+    // 1. Mobile Menu Toggle
+    // ----------------------------------------------------
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // ----------------------------------------------------
+    // 2. Zodiac Sign Calculation Utility
+    // ----------------------------------------------------
+    function getZodiacSign(day, month) {
+      const zodiacs = [
+        { name: "Capricorn", start: [12, 22], end: [12, 31], icon: "fa-solid fa-mountain" },
+        { name: "Capricorn", start: [1, 1], end: [1, 19], icon: "fa-solid fa-mountain" },
+        { name: "Aquarius", start: [1, 20], end: [2, 18], icon: "fa-solid fa-wind" },
+        { name: "Pisces", start: [2, 19], end: [3, 20], icon: "fa-solid fa-fish" },
+        { name: "Aries", start: [3, 21], end: [4, 19], icon: "fa-solid fa-fire" },
+        { name: "Taurus", start: [4, 20], end: [5, 20], icon: "fa-solid fa-tractor" }, // Taurus / Earth symbol
+        { name: "Gemini", start: [5, 21], end: [6, 20], icon: "fa-solid fa-people-arrows" },
+        { name: "Cancer", start: [6, 21], end: [7, 22], icon: "fa-solid fa-shrimp" },
+        { name: "Leo", start: [7, 23], end: [8, 22], icon: "fa-solid fa-crown" },
+        { name: "Virgo", start: [8, 23], end: [9, 22], icon: "fa-solid fa-feather" },
+        { name: "Libra", start: [9, 23], end: [10, 22], icon: "fa-solid fa-scale-balanced" },
+        { name: "Scorpio", start: [10, 23], end: [11, 21], icon: "fa-solid fa-spider" },
+        { name: "Sagittarius", start: [11, 22], end: [12, 21], icon: "fa-solid fa-location-arrow" }
+      ];
+
+      for (const z of zodiacs) {
+        const [sM, sD] = z.start;
+        const [eM, eD] = z.end;
+        if ((month === sM && day >= sD) || (month === eM && day <= eD)) {
+          return z;
+        }
+      }
+      return { name: "Celestial", icon: "fa-solid fa-star" };
+    }
+
+    // Month name utility
+    function getIndonesianDateString(dateStr) {
+      try {
+        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        const d = new Date(dateStr);
+        if (!isNaN(d.getTime())) {
+          const dateLocal = d.getUTCDate(); // Use UTC dates to match spreadsheet timestamps correctly
+          const monthLocal = months[d.getUTCMonth()];
+          const yearLocal = d.getUTCFullYear();
+          return {
+            formatted: `${dateLocal} ${monthLocal} ${yearLocal}`,
+            day: dateLocal,
+            month: d.getUTCMonth() + 1
+          };
+        }
+      } catch (err) {}
+      return { formatted: dateStr, day: 1, month: 1 };
+    }
+
+    // ----------------------------------------------------
+    // 3. Dynamic Rendering & SPA Profile Loading
+    // ----------------------------------------------------
+    const apiBaseUrl = "https://script.google.com/macros/s/AKfycbyg6XMPh_kdRb4iJVL-Xat19b-12UZcnixHlJtlE_LOLP067s34im6Kpry5ltnADGdK/exec";
+    let studentsData = [];
+    let currentId = null;
+
+    // Parse URL parameter
+    function getUrlParamId() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = parseInt(urlParams.get('id'));
+      return isNaN(id) ? 1 : id;
+    }
+
+    async function loadData() {
+      try {
+        const response = await fetch(`${apiBaseUrl}?sheet=Identitas`);
+        if (!response.ok) throw new Error("Connection failed");
+        const rawData = await response.json();
+        
+        if (rawData && rawData.length > 1) {
+          const headers = rawData[0];
+          
+          for (let i = 1; i < rawData.length; i++) {
+            const row = rawData[i];
+            const student = {};
+            headers.forEach((header, index) => {
+              student[header] = row[index];
+            });
+            student.id = i;
+            studentsData.push(student);
+          }
+          
+          currentId = getUrlParamId();
+          renderStudentProfile(currentId);
+        } else {
+          showError();
+        }
+      } catch (err) {
+        console.error("Fetch Identitas Error:", err);
+        showError();
+      }
+    }
+
+    function renderStudentProfile(id, direction = null) {
+      const student = studentsData.find(s => s.id === id);
+      if (!student) {
+        showError();
+        return;
+      }
+
+      currentId = id;
+
+      // Animate transition using GSAP if reloading dynamically
+      const timeline = gsap.timeline();
+      
+      if (direction) {
+        // Slide out effect
+        const slideOutX = direction === 'next' ? -50 : 50;
+        timeline.to('#narrative-panel', { opacity: 0, x: slideOutX, duration: 0.3, ease: 'power2.in' });
+        timeline.to('#portrait-container', { opacity: 0, scale: 0.95, duration: 0.3, ease: 'power2.in', delay: -0.3 });
+      }
+
+      timeline.call(() => {
+        // Inject Student Information
+        document.getElementById('portrait-container').innerHTML = `
+          <img src="Foto Siswa/${student.id}.png" alt="${student['Nama Lengkap']}" 
+               class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 hover:scale-105" 
+               onerror="handleImageError(this, '${student['Nama Panggilan'] ? student['Nama Panggilan'].charAt(0) : 'S'}')">
+          <div class="absolute inset-0 bg-gradient-to-t from-luxury-dark/80 via-transparent to-transparent opacity-40"></div>
+        `;
+        
+        document.getElementById('badge-absen').innerText = `Absen #${student.id.toString().padStart(2, '0')}`;
+        document.getElementById('badge-title').innerText = (student['Gelar'] && student['Gelar'].trim() !== '' && student['Gelar'] !== '-') ? student['Gelar'] : "Noble Student";
+        document.getElementById('student-name').innerText = student['Nama Lengkap'] || "Full Name";
+        
+        // DOB & Zodiac
+        const dobObj = getIndonesianDateString(student['Tanggal Lahir']);
+        document.getElementById('student-dob').innerText = dobObj.formatted;
+        
+        const zodiac = getZodiacSign(dobObj.day, dobObj.month);
+        document.getElementById('zodiac-name').innerText = zodiac.name;
+        
+        const zodiacIconElement = document.getElementById('zodiac-icon');
+        zodiacIconElement.className = `${zodiac.icon} text-luxury-gold`;
+
+        // Keahlian micro-tags
+        const hobbiesContainer = document.getElementById('hobby-tags');
+        hobbiesContainer.innerHTML = '';
+        if (student['Keahlian'] && student['Keahlian'].trim() !== '') {
+          const tags = student['Keahlian'].split(',').map(tag => tag.trim());
+          tags.forEach(tag => {
+            const span = document.createElement('span');
+            span.className = "px-3 py-1 text-[11px] font-sans font-light rounded-sm border border-luxury-gold/20 text-[#DFBA73] bg-luxury-gold/5 shadow-[0_0_10px_rgba(223,186,115,0.03)]";
+            span.innerText = tag;
+            hobbiesContainer.appendChild(span);
+          });
+        } else {
+          hobbiesContainer.innerHTML = `<span class="text-xs text-gray-500 italic">None specified</span>`;
+        }
+
+        // Quotes
+        document.getElementById('student-quote').innerText = `"${student['Quotes'] || 'Be useless so no one can use you'}"`;
+
+        // Page title update
+        document.title = `${student['Nama Lengkap']} - Profile`;
+        
+        // Navigation Indicator
+        document.getElementById('current-index').innerText = student.id;
+      });
+
+      // Show profile content if it's the initial load
+      timeline.call(() => {
+        document.getElementById('profile-loader').classList.add('hidden');
+        document.getElementById('profile-content').classList.remove('hidden');
+      });
+
+      // Slide in effect
+      if (direction) {
+        const slideInX = direction === 'next' ? 50 : -50;
+        timeline.set('#narrative-panel', { x: slideInX });
+        timeline.to('#narrative-panel', { opacity: 1, x: 0, duration: 0.5, ease: 'power2.out' });
+        timeline.to('#portrait-container', { opacity: 1, scale: 1, duration: 0.5, ease: 'power2.out', delay: -0.5 });
+      } else {
+        timeline.to('#narrative-panel', { opacity: 1, x: 0, duration: 0.8, ease: 'power2.out' });
+      }
+    }
+
+    function handleImageError(imageElement, initial) {
+      const parent = imageElement.parentNode;
+      parent.innerHTML = `
+        <div class="w-full h-full bg-luxury-navy/40 flex items-center justify-center flex-col">
+          <div class="w-20 h-20 rounded-full border border-luxury-gold/30 flex items-center justify-center text-luxury-gold bg-luxury-dark/60 font-serif text-3xl shadow-inner">
+            ${initial}
+          </div>
+          <span class="text-[10px] uppercase tracking-[0.2em] text-luxury-gold/50 mt-4">Noble Student</span>
+        </div>
+      `;
+    }
+
+    function showError() {
+      document.getElementById('profile-loader').classList.add('hidden');
+      document.getElementById('profile-content').classList.add('hidden');
+      document.getElementById('error-modal').classList.remove('hidden');
+    }
+
+    // ----------------------------------------------------
+    // 4. Sequential Looping Navigation Logic (1 to 24)
+    // ----------------------------------------------------
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+
+    function navigateToProfile(direction) {
+      if (studentsData.length === 0) return;
+      
+      let nextId = currentId;
+      if (direction === 'next') {
+        nextId = currentId + 1 > 24 ? 1 : currentId + 1;
+      } else if (direction === 'prev') {
+        nextId = currentId - 1 < 1 ? 24 : currentId - 1;
+      }
+
+      // Update URL without refreshing page
+      const newUrl = `${window.location.pathname}?id=${nextId}`;
+      window.history.pushState({ id: nextId }, '', newUrl);
+
+      // Render profile
+      renderStudentProfile(nextId, direction);
+    }
+
+    prevBtn.addEventListener('click', () => navigateToProfile('prev'));
+    nextBtn.addEventListener('click', () => navigateToProfile('next'));
+
+    // Handle browser back/forward buttons
+    window.addEventListener('popstate', (event) => {
+      const targetId = getUrlParamId();
+      renderStudentProfile(targetId);
+    });
+
+    // Start data load
+    loadData();
+  </script>
+</body>
+</html>

@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KELAS B / ANGKATAN III - The Elite Class Portal</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@100..900&display=swap" rel="stylesheet">
+  <!-- FontAwesome Free CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            luxury: {
+              dark: '#060913',
+              navy: '#0a0f1d',
+              gold: '#DFBA73',
+              goldDark: '#C5A059',
+            }
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'serif'],
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Radial Background Gradient */
+    body {
+      background: radial-gradient(circle at center, #0a0f1d 0%, #060913 100%);
+      color: #E5E7EB;
+    }
+    /* Luxury Border Glows */
+    .gold-glow {
+      box-shadow: 0 0 15px rgba(223, 186, 115, 0.08);
+      border: 1px solid rgba(223, 186, 115, 0.15);
+    }
+    .gold-glow-hover {
+      transition: all 0.5s ease;
+    }
+    .gold-glow-hover:hover {
+      box-shadow: 0 0 25px rgba(223, 186, 115, 0.35);
+      border-color: rgba(223, 186, 115, 0.8);
+      transform: translateY(-4px);
+    }
+    /* Image zoom and desaturation transition */
+    .student-photo {
+      filter: grayscale(100%);
+      transition: filter 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .student-card:hover .student-photo {
+      filter: grayscale(0%);
+      transform: scale(1.06);
+    }
+    /* Double Border Luxury Effect */
+    .double-border {
+      position: relative;
+      border: 1px solid rgba(223, 186, 115, 0.3);
+      padding: 12px;
+    }
+    .double-border::before {
+      content: '';
+      position: absolute;
+      top: 5px; left: 5px; right: 5px; bottom: 5px;
+      border: 1px solid rgba(223, 186, 115, 0.12);
+      pointer-events: none;
+    }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #060913;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #C5A059;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #DFBA73;
+    }
+    /* Floating Particle Animation */
+    .particle {
+      position: absolute;
+      pointer-events: none;
+      background: radial-gradient(circle, rgba(223, 186, 115, 0.4) 0%, rgba(223, 186, 115, 0) 70%);
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body class="font-sans antialiased overflow-x-hidden min-h-screen relative selection:bg-luxury-gold selection:text-luxury-dark">
+
+  <!-- Floating Background Particles Container -->
+  <div id="particle-container" class="absolute inset-0 overflow-hidden pointer-events-none z-0 min-h-full"></div>
+
+  <!-- Sticky Navbar -->
+  <nav class="sticky top-0 z-50 w-full border-b border-[#DFBA73]/10 bg-luxury-dark/70 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex h-20 items-center justify-between">
+        <!-- Logo Section -->
+        <div class="flex items-center gap-3">
+          <img src="Logo.png" alt="Class Logo" class="h-12 w-12 object-contain" onerror="this.src='https://placehold.co/100x100/0a0f1d/DFBA73?text=Logo'">
+          <div>
+            <span class="font-serif text-lg tracking-widest text-luxury-gold block leading-none">KELAS B</span>
+            <span class="text-xs uppercase tracking-widest text-[#9CA3AF]">Angkatan III</span>
+          </div>
+        </div>
+
+        <!-- Navigation Links (Desktop) -->
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="index.html" class="font-sans text-sm uppercase tracking-widest text-luxury-gold border-b border-luxury-gold/60 pb-1">Home</a>
+          <a href="akademik.html" class="font-sans text-sm uppercase tracking-widest text-[#9CA3AF] hover:text-luxury-gold transition-colors duration-300">Akademik & Piket</a>
+        </div>
+
+        <!-- Hamburger Icon (Mobile) -->
+        <div class="md:hidden">
+          <button id="mobile-menu-btn" class="text-luxury-gold hover:text-white focus:outline-none transition-colors duration-300">
+            <i class="fa-solid fa-bars text-2xl"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-menu" class="hidden md:hidden border-b border-[#DFBA73]/10 bg-luxury-dark/95 backdrop-blur-lg px-4 pt-2 pb-6 space-y-4">
+      <a href="index.html" class="block font-sans text-sm uppercase tracking-widest text-luxury-gold border-l-2 border-luxury-gold pl-3 py-2">Home</a>
+      <a href="akademik.html" class="block font-sans text-sm uppercase tracking-widest text-[#9CA3AF] hover:text-luxury-gold pl-3 py-2 transition-colors duration-300">Akademik & Piket</a>
+    </div>
+  </nav>
+
+  <!-- Cinematic Hero Section -->
+  <header id="hero" class="relative z-10 flex h-[calc(100vh-80px)] w-full items-center justify-center overflow-hidden px-4">
+    <div class="text-center max-w-4xl">
+      <div class="overflow-hidden mb-3">
+        <p id="hero-subtitle" class="font-sans text-sm tracking-[0.4em] uppercase text-luxury-gold opacity-0">Excellence. Honor. Unity.</p>
+      </div>
+      <div class="overflow-hidden mb-6">
+        <h1 id="hero-title" class="font-serif text-5xl sm:text-7xl lg:text-8xl font-medium tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-white via-[#E5E7EB] to-luxury-gold py-2 opacity-0">
+          KELAS B ANGKATAN III
+        </h1>
+      </div>
+      <div class="overflow-hidden mb-8">
+        <p id="hero-desc" class="text-sm sm:text-base text-[#9CA3AF] tracking-widest uppercase max-w-2xl mx-auto opacity-0 leading-relaxed">
+          Welcome to the digital hall of fame. A showcase of scholarly distinction, artistic pursuit, and elite synergy.
+        </p>
+      </div>
+      <div id="hero-btn-container" class="opacity-0">
+        <a id="hero-btn" href="#directory" class="inline-flex items-center gap-3 px-8 py-3.5 border border-luxury-gold/50 bg-luxury-gold/5 text-luxury-gold font-sans text-xs uppercase tracking-[0.2em] hover:bg-luxury-gold hover:text-luxury-dark transition-all duration-500 rounded-sm hover:shadow-[0_0_20px_rgba(223,186,115,0.3)]">
+          Explore Directory <i class="fa-solid fa-arrow-down-long text-xs animate-bounce"></i>
+        </a>
+      </div>
+    </div>
+    <!-- Ambient Gold Glow in Hero -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] sm:w-[600px] sm:h-[600px] rounded-full bg-luxury-gold/5 blur-[120px] pointer-events-none z-0"></div>
+  </header>
+
+  <!-- Main Content Wrap -->
+  <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 space-y-24 sm:space-y-36">
+
+    <!-- Section 1: Homage to Wali Kelas -->
+    <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
+      <!-- Image Showcase -->
+      <div class="lg:col-span-5 flex justify-center order-2 lg:order-1">
+        <div class="double-border max-w-[320px] sm:max-w-[360px] bg-luxury-dark/40 backdrop-blur-sm rounded-sm overflow-hidden gold-glow transition-all duration-500 hover:border-luxury-gold/40">
+          <div class="relative overflow-hidden aspect-[3/4]">
+            <img src="Foto Siswa/Wali_Kelas.png" alt="Ms. Putri" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 hover:scale-105" onerror="this.src='https://placehold.co/400x533/0a0f1d/DFBA73?text=Ms.+Putri'">
+            <!-- Subtle Overlay Accent -->
+            <div class="absolute inset-0 bg-gradient-to-t from-luxury-dark via-transparent to-transparent opacity-60"></div>
+          </div>
+        </div>
+      </div>
+      <!-- Greeting / Blockquote -->
+      <div class="lg:col-span-7 space-y-6 order-1 lg:order-2 text-center lg:text-left">
+        <div class="inline-block px-3 py-1 bg-luxury-gold/10 border border-luxury-gold/30 rounded-full">
+          <span class="text-xs uppercase tracking-widest text-luxury-gold font-medium">Wali Kelas</span>
+        </div>
+        <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl text-white font-medium">Putri Ramuja Dewi Sugata, S. Kes</h2>
+        <p class="text-sm uppercase tracking-widest text-luxury-gold/80 font-sans mt-1">Ms. Putri</p>
+        
+        <!-- Luxury Italic Greeting -->
+        <blockquote class="font-serif text-lg sm:text-xl lg:text-2xl text-gray-300 italic border-l-2 lg:border-l-4 border-luxury-gold pl-4 lg:pl-6 py-2 leading-relaxed my-6 font-light">
+          "Pendidikan adalah lentera yang menuntun kita melewati kegelapan menuju masa depan yang gemilang. Teruslah berkarya dengan kehormatan, raih impianmu setinggi langit, dan jadikan harmoni kebersamaan kita di Kelas B sebagai kekuatan abadi."
+        </blockquote>
+        
+        <p class="text-sm sm:text-base text-gray-400 leading-relaxed font-light">
+          Sebagai pembimbing dan orang tua di sekolah, Ms. Putri senantiasa memberikan arahan, motivasi, dan bimbingan moral yang kuat bagi seluruh anggota kelas. Kehadiran beliau memastikan bahwa setiap individu berkembang secara akademis dan personal.
+        </p>
+      </div>
+    </section>
+
+    <!-- Section 2: Siswa Grid Directory -->
+    <section id="directory" class="space-y-12">
+      <div class="text-center max-w-2xl mx-auto space-y-3">
+        <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl text-white font-medium tracking-wide">Hall of Fame Directory</h2>
+        <div class="h-0.5 w-24 bg-gradient-to-r from-transparent via-luxury-gold to-transparent mx-auto"></div>
+        <p class="text-xs sm:text-sm text-gray-400 uppercase tracking-widest max-w-lg mx-auto">
+          Explore the individual achievements, dreams, and profiles of our class members.
+        </p>
+      </div>
+
+      <!-- Loading State Indicator -->
+      <div id="directory-loader" class="flex flex-col items-center justify-center py-20 space-y-4">
+        <div class="relative w-16 h-16 flex items-center justify-center">
+          <!-- Spinning Luxury Crest -->
+          <div class="absolute inset-0 rounded-full border-2 border-luxury-gold/20"></div>
+          <div class="absolute inset-0 rounded-full border-t-2 border-luxury-gold animate-spin"></div>
+          <i class="fa-solid fa-crown text-luxury-gold text-lg animate-pulse"></i>
+        </div>
+        <p class="text-xs uppercase tracking-widest text-[#9CA3AF]">Fetching classmates...</p>
+      </div>
+
+      <!-- Student Directory Grid (Dynamic) -->
+      <div id="student-grid" class="hidden grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8">
+        <!-- Rendered dynamically from JS -->
+      </div>
+    </section>
+
+    <!-- Section 3: Class Dashboard -->
+    <section class="space-y-12">
+      <div class="text-center max-w-2xl mx-auto space-y-3">
+        <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl text-white font-medium tracking-wide">Class Dashboard</h2>
+        <div class="h-0.5 w-24 bg-gradient-to-r from-transparent via-luxury-gold to-transparent mx-auto"></div>
+        <p class="text-xs sm:text-sm text-gray-400 uppercase tracking-widest">
+          Real-time updates, active tasks, and countdowns.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Widget 1: Today's Agenda -->
+        <div class="bg-luxury-navy/40 backdrop-blur-md p-8 rounded-sm gold-glow flex flex-col justify-between space-y-6">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between border-b border-[#DFBA73]/10 pb-4">
+              <h3 class="font-serif text-xl text-white">Today's Agenda</h3>
+              <i class="fa-solid fa-calendar-check text-luxury-gold text-lg"></i>
+            </div>
+            <!-- Agenda List -->
+            <ul class="space-y-4 text-sm font-light text-gray-300">
+              <li class="flex items-start gap-3">
+                <span class="mt-1 h-1.5 w-1.5 rounded-full bg-luxury-gold shrink-0"></span>
+                <div>
+                  <p class="font-semibold text-white">Proyek Bahasa Inggris</p>
+                  <p class="text-xs text-[#9CA3AF]">Pengumpulan Essay - Jam 23:59</p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="mt-1 h-1.5 w-1.5 rounded-full bg-luxury-gold shrink-0"></span>
+                <div>
+                  <p class="font-semibold text-white">Ulangan Harian Matematika</p>
+                  <p class="text-xs text-[#9CA3AF]">Materi Turunan - Jam Ke 3-4</p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="mt-1 h-1.5 w-1.5 rounded-full bg-luxury-gold/40 shrink-0"></span>
+                <div>
+                  <p class="font-semibold text-gray-400">Kerja Kelompok IPA</p>
+                  <p class="text-xs text-[#9CA3AF]">Persiapan Praktikum - Esok Hari</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <a href="akademik.html" class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-luxury-gold hover:text-white transition-colors duration-300">
+            View Schedule <i class="fa-solid fa-arrow-right-long"></i>
+          </a>
+        </div>
+
+        <!-- Widget 2: Active Piket of the Day -->
+        <div class="bg-luxury-navy/40 backdrop-blur-md p-8 rounded-sm gold-glow flex flex-col justify-between space-y-6">
+          <div class="space-y-4 w-full">
+            <div class="flex items-center justify-between border-b border-[#DFBA73]/10 pb-4">
+              <h3 class="font-serif text-xl text-white">Active Piket</h3>
+              <i class="fa-solid fa-broom text-luxury-gold text-lg"></i>
+            </div>
+            <!-- Piket Members List -->
+            <div id="dashboard-piket" class="space-y-4">
+              <div class="flex justify-center items-center py-6">
+                <div class="h-6 w-6 border-2 border-luxury-gold border-t-transparent animate-spin rounded-full"></div>
+              </div>
+            </div>
+          </div>
+          <a href="akademik.html#piket" class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-luxury-gold hover:text-white transition-colors duration-300">
+            Full piket <i class="fa-solid fa-arrow-right-long"></i>
+          </a>
+        </div>
+
+          <p class="text-xs text-[#9CA3AF] uppercase tracking-widest">Target Date: 18 Dec 2026</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Premium Error Modal -->
+  <div id="error-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-luxury-dark/90 backdrop-blur-md">
+    <div class="bg-luxury-navy/90 border border-red-500/30 max-w-md w-full p-8 rounded-sm text-center space-y-6 shadow-2xl relative">
+      <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 bg-red-500/10 border border-red-500/30 rounded-full flex items-center justify-center text-red-500 text-3xl">
+        <i class="fa-solid fa-triangle-exclamation animate-pulse"></i>
+      </div>
+      <div class="pt-6 space-y-2">
+        <h3 class="font-serif text-2xl text-white">Database Connection Failure</h3>
+        <p class="text-sm text-gray-400">We encountered an issue while communicating with the Google Sheets database API. Check your internet connection and try again.</p>
+      </div>
+      <button onclick="window.location.reload()" class="w-full py-3 bg-red-500/10 hover:bg-red-500/20 border border-red-500/40 text-red-400 font-sans text-xs uppercase tracking-widest rounded-sm transition-all duration-300">
+        Retry Handshake
+      </button>
+    </div>
+  </div>
+
+  <!-- Footer Section -->
+  <footer class="border-t border-[#DFBA73]/10 bg-luxury-dark py-12 mt-20 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <img src="Logo.png" alt="Class Logo" class="h-10 w-10 object-contain" onerror="this.src='https://placehold.co/100x100/0a0f1d/DFBA73?text=Logo'">
+        <p class="text-xs uppercase tracking-widest text-gray-500">© 2026 KELAS B / ANGKATAN III. All Rights Reserved.</p>
+      </div>
+      <div class="flex gap-6 text-gray-500 text-sm">
+        <a href="index.html" class="hover:text-luxury-gold transition-colors duration-300">Home</a>
+        <a href="akademik.html" class="hover:text-luxury-gold transition-colors duration-300">Schedule</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- GSAP Animations & Data Loading Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script>
+    // ----------------------------------------------------
+    // 1. Mobile Menu Toggle
+    // ----------------------------------------------------
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // ----------------------------------------------------
+    // 2. Floating Gold Particles Background
+    // ----------------------------------------------------
+    const particleContainer = document.getElementById('particle-container');
+    const particleCount = 20;
+
+    for (let i = 0; i < particleCount; i++) {
+      const particle = document.createElement('div');
+      particle.classList.add('particle');
+      
+      // Random sizes and positions
+      const size = Math.random() * 8 + 4;
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      particle.style.left = `${Math.random() * 100}%`;
+      particle.style.top = `${Math.random() * 100}%`;
+      
+      particleContainer.appendChild(particle);
+
+      // Simple CSS floating animation
+      gsap.to(particle, {
+        y: `${Math.random() * -120 - 40}`,
+        x: `${Math.random() * 60 - 30}`,
+        opacity: Math.random() * 0.4 + 0.1,
+        duration: Math.random() * 12 + 8,
+        repeat: -1,
+        yoyo: true,
+        ease: 'power1.inOut'
+      });
+    }
+
+    // ----------------------------------------------------
+    // 3. GSAP Entry Fades & Reset Scroll on Reload
+    // ----------------------------------------------------
+    // Memaksa browser untuk tidak mengingat posisi scroll terakhir
+    if (history.scrollRestoration) {
+      history.scrollRestoration = 'manual';
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      // Mengembalikan posisi layar ke paling atas secara instan saat reload
+      window.scrollTo(0, 0);
+
+      gsap.to('#hero-subtitle', { opacity: 1, duration: 1.2, delay: 0.2, ease: 'power2.out' });
+      gsap.to('#hero-title', { opacity: 1, duration: 1.5, delay: 0.5, ease: 'power3.out' });
+      gsap.to('#hero-desc', { opacity: 1, duration: 1.5, delay: 0.8, ease: 'power2.out' });
+      gsap.to('#hero-btn-container', { opacity: 1, duration: 1.2, delay: 1.1, ease: 'power2.out' });
+    });
+
+    // ----------------------------------------------------
+    // 4. Circular Countdown Widget
+    // ----------------------------------------------------
+    const targetDate = new Date('December 18, 2026 00:00:00').getTime();
+    const currentDate = new Date().getTime();
+    const totalDaysInSemester = 150; // Reference scale (e.g. 5 months)
+    
+    let daysRemaining = Math.ceil((targetDate - currentDate) / (1000 * 60 * 60 * 24));
+    if (daysRemaining < 0) daysRemaining = 0;
+    
+    // Calculate ring offset (radius is 70, circumference is 2 * PI * 70 = ~439.8)
+    const ring = document.getElementById('countdown-ring');
+    const circumference = 439.8;
+    const progress = Math.max(0, Math.min(1, daysRemaining / totalDaysInSemester));
+    const offset = circumference - (progress * circumference);
+    
+    setTimeout(() => {
+      ring.style.strokeDashoffset = offset;
+    }, 500);
+
+    // ----------------------------------------------------
+    // 5. API Data Fetching & Mapping
+    // ----------------------------------------------------
+    const apiBaseUrl = "https://script.google.com/macros/s/AKfycbyg6XMPh_kdRb4iJVL-Xat19b-12UZcnixHlJtlE_LOLP067s34im6Kpry5ltnADGdK/exec";
+    
+    let studentIdentitas = [];
+    let studentMap = {}; // mapping Nickname -> ID
+
+    async function fetchIdentitas() {
+      try {
+        const response = await fetch(`${apiBaseUrl}?sheet=Identitas`);
+        if (!response.ok) throw new Error("HTTP connection failed");
+        const rawData = await response.json();
+        
+        // rawData is 2D Array: Row 0 is headers
+        if (rawData && rawData.length > 1) {
+          const headers = rawData[0];
+          
+          for (let i = 1; i < rawData.length; i++) {
+            const row = rawData[i];
+            const student = {};
+            headers.forEach((header, index) => {
+              student[header] = row[index];
+            });
+            
+            // Absen mapping: index is i (1-based row index matches student's ID)
+            student.id = i;
+            studentIdentitas.push(student);
+            
+            // Build Nickname map for Piket mapping
+            // Store mapping both in raw name and uppercase for robust matching
+            if (student['Nama Panggilan']) {
+              studentMap[student['Nama Panggilan'].trim().toLowerCase()] = i;
+            }
+          }
+          
+          renderStudentGrid(studentIdentitas);
+          await fetchActivePiket();
+        } else {
+          showError();
+        }
+      } catch (err) {
+        console.error("Fetch Identitas Error:", err);
+        showError();
+      }
+    }
+
+    function renderStudentGrid(students) {
+      const grid = document.getElementById('student-grid');
+      const loader = document.getElementById('directory-loader');
+      
+      grid.innerHTML = '';
+      
+      students.forEach(student => {
+        const card = document.createElement('a');
+        card.href = `profil.html?id=${student.id}`;
+        card.className = `student-card block double-border bg-luxury-navy/20 backdrop-blur-sm rounded-sm overflow-hidden gold-glow gold-glow-hover cursor-pointer`;
+        
+        // Graceful Image Fallback inside HTML
+        const imagePath = `Foto Siswa/${student.id}.png`;
+        const initial = student['Nama Panggilan'] ? student['Nama Panggilan'].charAt(0) : 'S';
+        
+        card.innerHTML = `
+          <div class="relative overflow-hidden aspect-[3/4] border-b border-[#DFBA73]/10">
+            <img src="${imagePath}" alt="${student['Nama Lengkap']}" 
+                 class="student-photo w-full h-full object-cover" 
+                 onerror="handleImageError(this, '${initial}')">
+            <!-- Glowing Accent Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-luxury-dark/80 via-transparent to-transparent opacity-40"></div>
+          </div>
+          <div class="p-4 text-center bg-luxury-navy relative z-10 border-t border-[#DFBA73]/10">
+            <p class="font-serif text-sm sm:text-base text-luxury-gold tracking-wide font-medium break-words">${student['Nama Panggilan'] || 'Student'}</p>
+            <p class="text-[10px] uppercase tracking-widest text-gray-400 mt-0.5">Absen ${student.id.toString().padStart(2, '0')}</p>
+          </div>
+        `;
+        
+        grid.appendChild(card);
+      });
+      
+      loader.classList.add('hidden');
+      grid.classList.remove('hidden');
+      
+      // Animate entry of cards
+      gsap.fromTo('.student-card', 
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, stagger: 0.05, duration: 0.8, ease: 'power2.out' }
+      );
+    }
+
+    function handleImageError(imageElement, initial) {
+      // Replaces image with a luxury vector placeholder
+      const parent = imageElement.parentNode;
+      parent.innerHTML = `
+        <div class="w-full h-full bg-luxury-navy/40 flex items-center justify-center flex-col">
+          <div class="w-14 h-14 rounded-full border border-luxury-gold/30 flex items-center justify-center text-luxury-gold bg-luxury-dark/60 font-serif text-2xl shadow-inner">
+            ${initial}
+          </div>
+          <span class="text-[9px] uppercase tracking-widest text-luxury-gold/50 mt-3">Noble Student</span>
+        </div>
+      `;
+    }
+
+    async function fetchActivePiket() {
+      const piketWidget = document.getElementById('dashboard-piket');
+      try {
+        const response = await fetch(`${apiBaseUrl}?sheet=Piket`);
+        if (!response.ok) throw new Error("Piket fetch failed");
+        
+        const rawData = await response.json();
+        
+        if (rawData && rawData.length > 1) {
+          const daysOfWeek = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+          const todayIndex = new Date().getDay();
+          let todayDayName = daysOfWeek[todayIndex]; // e.g. "Sabtu" or "Senin"
+          
+          // Debugging/Fallback: If it's weekend, show Monday's piket
+          let showRosterDay = todayDayName;
+          let isWeekend = false;
+          if (todayIndex === 0 || todayIndex === 6) {
+            showRosterDay = "Senin";
+            isWeekend = true;
+          }
+          
+          const headers = rawData[0]; // ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat']
+          const dayColIndex = headers.indexOf(showRosterDay);
+          
+          if (dayColIndex !== -1) {
+            let piket = [];
+            // Row 1 to N contain names
+            for (let r = 1; r < rawData.length; r++) {
+              const name = rawData[r][dayColIndex];
+              if (name && name !== '-' && name.trim() !== '') {
+                piket.push(name.trim());
+              }
+            }
+            
+            // Build visual html
+            piketWidget.innerHTML = '';
+            
+            if (isWeekend) {
+              piketWidget.innerHTML += `<p class="text-[11px] uppercase tracking-widest text-[#9CA3AF] mb-2 italic text-center">Weekend: Showing Monday's Piket</p>`;
+            } else {
+              piketWidget.innerHTML += `<p class="text-[11px] uppercase tracking-widest text-[#9CA3AF] mb-2 text-center">Today: ${showRosterDay}'s Crew</p>`;
+            }
+            
+            const listContainer = document.createElement('div');
+            listContainer.className = "space-y-3";
+            
+            piket.forEach(nickname => {
+              const lowerName = nickname.toLowerCase();
+              const studentId = studentMap[lowerName];
+              const imageSrc = studentId ? `Foto Siswa/${studentId}.png` : '';
+              const initial = nickname.charAt(0);
+              
+              const item = document.createElement('div');
+              item.className = "flex items-center gap-3 bg-luxury-dark/40 p-2 rounded-sm border border-luxury-gold/5";
+              
+              // Small portrait with placeholder fallback
+              let portraitHTML = '';
+              if (studentId) {
+                portraitHTML = `
+                  <div class="h-8 w-8 rounded-full overflow-hidden border border-luxury-gold/20 shrink-0">
+                    <img src="${imageSrc}" alt="${nickname}" class="h-full w-full object-cover" onerror="this.outerHTML='<div class=\\'h-full w-full flex items-center justify-center bg-luxury-navy text-[10px] text-luxury-gold font-serif\\'>${initial}</div>\''">
+                  </div>
+                `;
+              } else {
+                portraitHTML = `
+                  <div class="h-8 w-8 rounded-full bg-luxury-navy/60 border border-luxury-gold/20 flex items-center justify-center text-[10px] text-luxury-gold font-serif shrink-0">
+                    ${initial}
+                  </div>
+                `;
+              }
+              
+              item.innerHTML = `
+                ${portraitHTML}
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-medium text-white truncate">${nickname}</p>
+                </div>
+                ${studentId ? `
+                  <a href="profil.html?id=${studentId}" class="text-[10px] text-luxury-gold hover:text-white uppercase tracking-widest font-light shrink-0">
+                    Profile <i class="fa-solid fa-chevron-right text-[8px]"></i>
+                  </a>
+                ` : ''}
+              `;
+              
+              listContainer.appendChild(item);
+            });
+            
+            piketWidget.appendChild(listContainer);
+          } else {
+            piketWidget.innerHTML = `<p class="text-sm text-gray-400 py-6 text-center">No schedule active for this day.</p>`;
+          }
+        }
+      } catch (err) {
+        console.error("Fetch Piket Error:", err);
+        piketWidget.innerHTML = `<p class="text-xs text-red-400 py-4 text-center"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Failed to fetch active piket</p>`;
+      }
+    }
+
+    function showError() {
+      document.getElementById('directory-loader').classList.add('hidden');
+      document.getElementById('error-modal').classList.remove('hidden');
+    }
+
+    // Initialize API handshakes
+    fetchIdentitas();
+  </script>
+</body>
+</html>
