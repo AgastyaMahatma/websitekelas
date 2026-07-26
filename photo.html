@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galeri Foto - Kelas B Angkatan 3</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@100..900&display=swap" rel="stylesheet">
+  <!-- FontAwesome Free CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            luxury: {
+              dark: '#060913',
+              navy: '#0a0f1d',
+              gold: '#DFBA73',
+              goldDark: '#C5A059',
+            }
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'serif'],
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Radial Background Gradient - Fixed Viewport to prevent black void */
+    body {
+      background: radial-gradient(circle at top, #0a0f1d 0%, #060913 100%) fixed;
+      color: #E5E7EB;
+    }
+    .gold-glow {
+      box-shadow: 0 0 20px rgba(223, 186, 115, 0.06);
+      border: 1px solid rgba(223, 186, 115, 0.15);
+    }
+    .gold-glow-hover {
+      transition: all 0.4s ease;
+    }
+    .gold-glow-hover:hover {
+      box-shadow: 0 0 25px rgba(223, 186, 115, 0.25);
+      border-color: rgba(223, 186, 115, 0.6);
+    }
+    .double-border {
+      position: relative;
+      border: 1px solid rgba(223, 186, 115, 0.25);
+      padding: 12px;
+    }
+    .double-border::before {
+      content: '';
+      position: absolute;
+      top: 5px; left: 5px; right: 5px; bottom: 5px;
+      border: 1px solid rgba(223, 186, 115, 0.1);
+      pointer-events: none;
+    }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #060913;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #C5A059;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #DFBA73;
+    }
+  </style>
+</head>
+<body class="font-sans antialiased overflow-x-hidden min-h-screen relative flex flex-col justify-between selection:bg-luxury-gold selection:text-luxury-dark">
+
+  <!-- Sticky Navbar -->
+  <nav class="sticky top-0 z-50 w-full border-b border-[#DFBA73]/10 bg-luxury-dark/70 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex h-20 items-center justify-between">
+        <div class="flex items-center gap-3">
+          <img src="Logo.png" alt="Class Logo" class="h-12 w-12 object-contain" onerror="this.src='https://placehold.co/100x100/0a0f1d/DFBA73?text=Logo'">
+          <div>
+            <span class="font-serif text-lg tracking-widest text-luxury-gold block leading-none">KELAS B</span>
+            <span class="text-xs uppercase tracking-widest text-[#9CA3AF]">Angkatan III</span>
+          </div>
+        </div>
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="index.html" class="font-sans text-sm uppercase tracking-widest text-[#9CA3AF] hover:text-luxury-gold transition-colors duration-300">Beranda</a>
+          <a href="akademik.html" class="font-sans text-sm uppercase tracking-widest text-[#9CA3AF] hover:text-luxury-gold transition-colors duration-300">Akademik & Piket</a>
+          <a href="photo.html" class="font-sans text-sm uppercase tracking-widest text-luxury-gold border-b border-luxury-gold/60 pb-1">Galeri Foto</a>
+        </div>
+        <div class="md:hidden">
+          <button id="mobile-menu-btn" class="text-luxury-gold hover:text-white focus:outline-none transition-colors duration-300">
+            <i class="fa-solid fa-bars text-2xl"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden border-b border-[#DFBA73]/10 bg-luxury-dark/95 backdrop-blur-lg px-4 pt-2 pb-6 space-y-4">
+      <a href="index.html" class="block font-sans text-sm uppercase tracking-widest text-[#9CA3AF] hover:text-luxury-gold pl-3 py-2 transition-colors duration-300">Beranda</a>
+      <a href="akademik.html" class="block font-sans text-sm uppercase tracking-widest text-[#9CA3AF] hover:text-luxury-gold pl-3 py-2 transition-colors duration-300">Akademik & Piket</a>
+      <a href="photo.html" class="block font-sans text-sm uppercase tracking-widest text-luxury-gold pl-3 py-2">Galeri Foto</a>
+    </div>
+  </nav>
+
+  <!-- Main Gallery Layout -->
+  <main class="relative z-10 max-w-4xl mx-auto w-full px-4 py-12 lg:py-20 flex-grow flex flex-col justify-start space-y-16">
+    
+    <!-- Section Header -->
+    <div class="text-center max-w-2xl mx-auto space-y-3">
+      <div class="inline-block px-3 py-1 bg-luxury-gold/10 border border-luxury-gold/30 rounded-full">
+        <span class="text-xs uppercase tracking-widest text-luxury-gold font-medium">Dokumentasi Kelas</span>
+      </div>
+      <h1 class="font-serif text-3xl sm:text-4xl lg:text-5xl text-white font-medium tracking-wide">Galeri Foto</h1>
+      <div class="h-0.5 w-24 bg-gradient-to-r from-transparent via-luxury-gold to-transparent mx-auto"></div>
+      <p class="text-xs sm:text-sm text-gray-400 uppercase tracking-widest max-w-md mx-auto">
+        Kumpulan memori dan dokumentasi kegiatan Kelas B Angkatan 3.
+      </p>
+    </div>
+
+    <!-- Gallery Loader -->
+    <div id="gallery-loader" class="flex flex-col items-center justify-center py-20 space-y-4">
+      <div class="relative w-16 h-16 flex items-center justify-center">
+        <div class="absolute inset-0 rounded-full border-2 border-luxury-gold/20"></div>
+        <div class="absolute inset-0 rounded-full border-t-2 border-luxury-gold animate-spin"></div>
+        <i class="fa-solid fa-camera text-luxury-gold text-lg animate-pulse"></i>
+      </div>
+      <p class="text-xs uppercase tracking-widest text-[#9CA3AF]">Memuat memori kelas...</p>
+    </div>
+
+    <!-- Photos Stream Container (Centered single column, max-width 800px) -->
+    <div id="photos-container" class="hidden space-y-12 max-w-[800px] mx-auto w-full">
+      <!-- Photos are dynamically injected here -->
+    </div>
+
+  </main>
+
+  <!-- Premium Error Modal -->
+  <div id="error-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-luxury-dark/90 backdrop-blur-md">
+    <div class="bg-luxury-navy/90 border border-red-500/30 max-w-md w-full p-8 rounded-sm text-center space-y-6 shadow-2xl relative">
+      <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 bg-red-500/10 border border-red-500/30 rounded-full flex items-center justify-center text-red-500 text-3xl">
+        <i class="fa-solid fa-triangle-exclamation animate-pulse"></i>
+      </div>
+      <div class="pt-6 space-y-2">
+        <h3 class="font-serif text-2xl text-white">Gagal Memuat Galeri</h3>
+        <p class="text-sm text-gray-400">Kami mengalami kendala saat mengambil berkas foto dokumentasi dari server. Pastikan koneksi internet Anda aktif.</p>
+      </div>
+      <button onclick="window.location.reload()" class="w-full py-3 bg-red-500/10 hover:bg-red-500/20 border border-red-500/40 text-red-400 font-sans text-xs uppercase tracking-widest rounded-sm transition-all duration-300">
+        Coba Hubungkan Kembali
+      </button>
+    </div>
+  </div>
+
+  <!-- Footer Section -->
+  <footer class="border-t border-[#DFBA73]/10 bg-luxury-dark py-12 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <img src="Logo.png" alt="Class Logo" class="h-10 w-10 object-contain" onerror="this.src='https://placehold.co/100x100/0a0f1d/DFBA73?text=Logo'">
+        <p class="text-xs uppercase tracking-widest text-gray-500">© 2026 KELAS B / ANGKATAN III. All Rights Reserved.</p>
+      </div>
+      <div class="flex gap-6 text-gray-500 text-sm">
+        <a href="index.html" class="hover:text-luxury-gold transition-colors duration-300">Home</a>
+        <a href="akademik.html" class="hover:text-luxury-gold transition-colors duration-300">Schedule</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- GSAP & Data Cache Fetching Script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script>
+    // ----------------------------------------------------
+    // 1. Mobile Menu Toggle
+    // ----------------------------------------------------
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // ----------------------------------------------------
+    // 2. Date Formatting Utility (Indonesian Months & Days)
+    // ----------------------------------------------------
+    function formatIndonesianDate(dateStr) {
+      try {
+        // Handle Google script date strings or standard ISO dates
+        const d = new Date(dateStr);
+        if (!isNaN(d.getTime())) {
+          return d.toLocaleDateString('id-ID', { 
+            weekday: 'long', 
+            day: 'numeric', 
+            month: 'long', 
+            year: 'numeric' 
+          });
+        }
+      } catch (err) {}
+      return dateStr;
+    }
+
+    // ----------------------------------------------------
+    // 3. Dynamic Photos Renders with LocalStorage Caching
+    // ----------------------------------------------------
+    const apiPhotosUrl = "https://script.google.com/macros/s/AKfycbwyk9ti2F6kkc1ffmf5eCVJYULKr6bo2TXnF45HTLlNmfx1kbYdUCqHftskz46VTB6s/exec";
+    const cacheKey = "class_web_photos";
+
+    async function loadPhotos() {
+      const cached = localStorage.getItem(cacheKey);
+      
+      // If cache exists, render it immediately
+      if (cached) {
+        try {
+          const parsedData = JSON.parse(cached);
+          renderPhotos(parsedData, true);
+        } catch (e) {
+          localStorage.removeItem(cacheKey);
+        }
+      }
+
+      // Fetch fresh data in the background
+      try {
+        const response = await fetch(apiPhotosUrl);
+        if (!response.ok) throw new Error("Gagal mengambil data galeri");
+        const freshData = await response.json();
+
+        // Save fresh data to cache
+        localStorage.setItem(cacheKey, JSON.stringify(freshData));
+
+        // Re-render only if the fresh data differs from cache to avoid visual flashing
+        if (JSON.stringify(freshData) !== cached) {
+          renderPhotos(freshData, false);
+        }
+      } catch (err) {
+        console.error("Fetch Photos Error:", err);
+        // If there is no cache and fetch fails, display error modal
+        if (!cached) {
+          showError();
+        }
+      }
+    }
+
+    function renderPhotos(photos, isInitialFromCache) {
+      const container = document.getElementById('photos-container');
+      const loader = document.getElementById('gallery-loader');
+
+      container.innerHTML = '';
+
+      if (photos.length === 0) {
+        container.innerHTML = `<p class="text-center text-gray-500 py-10 font-light">Belum ada foto dokumentasi saat ini.</p>`;
+        loader.classList.add('hidden');
+        container.classList.remove('hidden');
+        return;
+      }
+
+      photos.forEach(photo => {
+        const card = document.createElement('div');
+        card.className = "photo-item bg-luxury-navy/30 backdrop-blur-sm p-4 sm:p-6 border border-[#DFBA73]/15 gold-glow rounded-sm flex flex-col space-y-4";
+        
+        // Format Date beautifully
+        const dateFormatted = formatIndonesianDate(photo.date);
+
+        card.innerHTML = `
+          <!-- Photo Frame with Double Border -->
+          <div class="double-border bg-luxury-dark/40 overflow-hidden rounded-sm flex justify-center items-center relative aspect-[16/9] w-full max-h-[500px]">
+            <img src="${photo.photoUrl}" alt="Dokumentasi Kelas" 
+                 class="w-full h-full object-contain transition-all duration-700 hover:scale-102"
+                 onerror="handleImageLoadError(this)">
+          </div>
+          <!-- Info Details -->
+          <div class="flex items-center gap-3 border-t border-[#DFBA73]/10 pt-4">
+            <i class="fa-solid fa-clock text-luxury-gold text-sm shrink-0"></i>
+            <span class="text-xs sm:text-sm text-gray-300 font-light tracking-wide">${dateFormatted}</span>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+
+      loader.classList.add('hidden');
+      container.classList.remove('hidden');
+
+      // GSAP fade in animations only on initial render or when cache is empty
+      if (!isInitialFromCache) {
+        gsap.from('.photo-item', {
+          opacity: 0,
+          y: 30,
+          stagger: 0.1,
+          duration: 0.8,
+          ease: 'power2.out'
+        });
+      }
+    }
+
+    function handleImageLoadError(img) {
+      const parent = img.parentNode;
+      parent.innerHTML = `
+        <div class="w-full h-full bg-luxury-navy/40 flex items-center justify-center flex-col p-6 text-center space-y-3">
+          <i class="fa-solid fa-triangle-exclamation text-luxury-gold text-3xl animate-pulse"></i>
+          <span class="text-xs uppercase tracking-widest text-luxury-gold/70">Foto Gagal Dimuat</span>
+          <p class="text-[10px] text-gray-500 max-w-xs">Tautan foto ini tidak aktif atau dibatasi oleh izin akses Drive.</p>
+        </div>
+      `;
+    }
+
+    function showError() {
+      document.getElementById('gallery-loader').classList.add('hidden');
+      document.getElementById('photos-container').classList.add('hidden');
+      document.getElementById('error-modal').classList.remove('hidden');
+    }
+
+    // Load photos on load
+    loadPhotos();
+  </script>
+</body>
+</html>
